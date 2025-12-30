@@ -324,13 +324,17 @@ export class UIInjector {
   }
 
   private applyLoadingStyles(overlay: HTMLDivElement): void {
+    const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const overlayBg = isDarkMode ? 'rgba(45, 45, 45, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+
     overlay.style.cssText = `
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(255, 255, 255, 0.95);
+      background: ${overlayBg};
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -340,12 +344,15 @@ export class UIInjector {
       border-radius: 3px;
     `;
 
+    const spinnerBorder = isDarkMode ? '#404040' : '#DFE1E6';
+    const messageColor = isDarkMode ? '#e0e0e0' : '#42526E';
+
     const style = document.createElement('style');
     style.textContent = `
       .jira-improver-loading .spinner {
         width: 32px;
         height: 32px;
-        border: 3px solid #DFE1E6;
+        border: 3px solid ${spinnerBorder};
         border-top-color: #0052CC;
         border-radius: 50%;
         animation: spin 0.8s linear infinite;
@@ -353,7 +360,7 @@ export class UIInjector {
 
       .jira-improver-loading .message {
         font-size: 14px;
-        color: #42526E;
+        color: ${messageColor};
         font-weight: 500;
       }
 

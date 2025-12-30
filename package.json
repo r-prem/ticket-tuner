@@ -1,6 +1,6 @@
 {
   "name": "story-refiner",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Chrome extension to improve Jira ticket descriptions using AI",
   "scripts": {
     "dev": "webpack --config webpack/webpack.dev.js --watch",

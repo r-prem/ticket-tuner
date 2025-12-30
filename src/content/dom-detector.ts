@@ -108,6 +108,9 @@ export class JiraDomDetector {
     // Focus the editor
     container.focus();
 
+    // IMPORTANT: Preserve attachments, images, and media before replacing content
+    const preservedElements = this.extractPreservedElements(container);
+
     // Select all existing content
     const selection = window.getSelection();
     if (selection) {
@@ -136,9 +139,53 @@ export class JiraDomDetector {
       document.execCommand('insertHTML', false, html);
     }
 
+    // Re-append preserved elements (attachments, images, etc.)
+    this.reinsertPreservedElements(container, preservedElements);
+
     // Trigger input/change events for Jira to detect the change
     container.dispatchEvent(new Event('input', { bubbles: true }));
     container.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  private extractPreservedElements(container: HTMLElement): Element[] {
+    const preserved: Element[] = [];
+
+    // Preserve media nodes (images, files, attachments)
+    const mediaSelectors = [
+      '.mediaSingle', // Jira media nodes
+      '.media-single', // Alternative media wrapper
+      '[data-node-type="mediaSingle"]',
+      '[data-node-type="media"]',
+      'img[data-media-id]', // Media images
+      '.attachment', // Attachment nodes
+      '[data-attachment-id]',
+      '.inline-task-list', // Preserve task lists
+      '.code-block', // Preserve code blocks
+    ];
+
+    mediaSelectors.forEach((selector) => {
+      const elements = container.querySelectorAll(selector);
+      elements.forEach((el) => {
+        // Clone the element to preserve it
+        preserved.push(el.cloneNode(true) as Element);
+      });
+    });
+
+    return preserved;
+  }
+
+  private reinsertPreservedElements(container: HTMLElement, elements: Element[]): void {
+    if (elements.length === 0) return;
+
+    // Append preserved elements at the end of the content
+    elements.forEach((el) => {
+      // Add some spacing before attachments
+      const spacer = document.createElement('p');
+      spacer.innerHTML = '<br>';
+      container.appendChild(spacer);
+
+      container.appendChild(el);
+    });
   }
 
   private isEditable(element: HTMLElement): boolean {
