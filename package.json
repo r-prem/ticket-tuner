@@ -1,0 +1,40 @@
+{
+  "name": "story-refiner",
+  "version": "1.0.0",
+  "description": "Chrome extension to improve Jira ticket descriptions using AI",
+  "scripts": {
+    "dev": "webpack --config webpack/webpack.dev.js --watch",
+    "build": "webpack --config webpack/webpack.prod.js",
+    "clean": "rm -rf dist",
+    "lint": "eslint src --ext .ts",
+    "type-check": "tsc --noEmit",
+    "prettier": "npx prettier 'src/**/*.{ts,html,css}' --write"
+  },
+  "keywords": [
+    "chrome-extension",
+    "jira",
+    "ai",
+    "openai"
+  ],
+  "author": "Raffael Prem",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^6.10.0",
+    "eslint": "^8.57.0",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^3.3.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-merge": "^5.10.0",
+    "prettier": "^3.7.4"
+  },
+  "dependencies": {
+    "openai": "^6.15.0"
+  }
+}

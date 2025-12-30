@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jira Improvement Suite - Settings</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        width: 400px;
+        background: #f5f5f5;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #1a1a1a !important;
+          color: #e0e0e0 !important;
+        }
+
+        header {
+          background: linear-gradient(135deg, #1458bc 0%, #0052cc 100%) !important;
+          border-bottom-color: #0747a6 !important;
+        }
+
+        .config-section,
+        .template-section {
+          border-bottom-color: #404040 !important;
+        }
+
+        h2 {
+          color: #e0e0e0 !important;
+        }
+
+        h2:hover {
+          color: #4c9aff !important;
+        }
+
+        h2::after {
+          color: #a0a0a0 !important;
+        }
+
+        label {
+          color: #b8b8b8 !important;
+        }
+
+        .input-field {
+          background: #1a1a1a !important;
+          border-color: #404040 !important;
+          color: #e0e0e0 !important;
+        }
+
+        .input-field:focus {
+          border-color: #4c9aff !important;
+        }
+
+        .toggle-btn {
+          background: #1a1a1a !important;
+          border-color: #404040 !important;
+          color: #e0e0e0 !important;
+        }
+
+        .toggle-btn:hover {
+          background: #404040 !important;
+        }
+
+        .help-text {
+          color: #a0a0a0 !important;
+        }
+
+        .btn-secondary {
+          background: #1a1a1a !important;
+          color: #e0e0e0 !important;
+          border-color: #404040 !important;
+        }
+
+        .btn-secondary:hover {
+          background: #404040 !important;
+        }
+
+        .test-result.success {
+          background: #0d3625 !important;
+          color: #7ee2a8 !important;
+          border-color: #0d3625 !important;
+        }
+
+        .test-result.error {
+          background: #3d1410 !important;
+          color: #ff8f73 !important;
+          border-color: #3d1410 !important;
+        }
+
+        .template-item {
+          background: #1a1a1a !important;
+          border-color: #404040 !important;
+        }
+
+        .template-name {
+          color: #e0e0e0 !important;
+        }
+
+        .template-desc {
+          color: #a0a0a0 !important;
+        }
+
+        .btn-delete {
+          background: #3d1410 !important;
+          color: #ff8f73 !important;
+          border-color: #5a2016 !important;
+        }
+
+        .btn-delete:hover {
+          background: #5a2016 !important;
+          color: #ffbdad !important;
+        }
+
+        .empty-state {
+          color: #a0a0a0 !important;
+        }
+
+        footer {
+          background: #1a1a1a !important;
+        }
+
+        .version {
+          color: #a0a0a0 !important;
+        }
+      }
+
+      .container {
+        background: white;
+        border-radius: 0.5rem;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .container {
+          background: #2d2d2d !important;
+        }
+      }
+
+      header {
+        background: linear-gradient(135deg, #0052cc 0%, #0065ff 100%);
+        color: white;
+        padding: 20px;
+        border-bottom: 3px solid #0747a6;
+      }
+
+      header h1 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        margin-top: 8px;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ffa500;
+      }
+
+      .status-indicator.connected .status-dot {
+        background: #36b37e;
+      }
+
+      .status-indicator.error .status-dot {
+        background: #de350b;
+      }
+
+      .config-section,
+      .template-section {
+        padding: 20px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      h2 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: #172b4d;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        user-select: none;
+      }
+
+      h2:hover {
+        color: #0052cc;
+      }
+
+      h2::after {
+        content: '▼';
+        font-size: 10px;
+        transition: transform 0.2s;
+        color: #6b778c;
+      }
+
+      h2.collapsed::after {
+        transform: rotate(-90deg);
+      }
+
+      .section-content {
+        max-height: 2000px;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+
+      .section-content.collapsed {
+        max-height: 0;
+      }
+
+      .form-group {
+        margin-bottom: 16px;
+      }
+
+      label {
+        display: block;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: 6px;
+        color: #42526e;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 8px 12px;
+        border: 2px solid #dfe1e6;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border-color 0.2s;
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      }
+
+      .input-field:focus {
+        outline: none;
+        border-color: #0052cc;
+      }
+
+      textarea.input-field {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .password-input {
+        display: flex;
+        gap: 8px;
+      }
+
+      .password-input .input-field {
+        flex: 1;
+      }
+
+      .toggle-btn {
+        padding: 8px 12px;
+        background: #fafbfc;
+        border: 2px solid #dfe1e6;
+        border-radius: 3px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .toggle-btn:hover {
+        background: #ebecf0;
+      }
+
+      .help-text {
+        display: block;
+        font-size: 11px;
+        color: #6b778c;
+        margin-top: 4px;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .btn {
+        flex: 1;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 3px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-primary {
+        background: #0052cc;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #0065ff;
+      }
+
+      .btn-primary:disabled {
+        background: #b3d4ff;
+        cursor: not-allowed;
+      }
+
+      .btn-secondary {
+        background: #fafbfc;
+        color: #42526e;
+        border: 2px solid #dfe1e6;
+      }
+
+      .btn-secondary:hover {
+        background: #ebecf0;
+      }
+
+      .test-result {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-radius: 3px;
+        font-size: 13px;
+      }
+
+      .test-result.success {
+        background: #e3fcef;
+        color: #006644;
+        border: 1px solid #abf5d1;
+      }
+
+      .test-result.error {
+        background: #ffebe6;
+        color: #bf2600;
+        border: 1px solid #ffbdad;
+      }
+
+      .test-result.hidden {
+        display: none;
+      }
+
+      footer {
+        padding: 12px 20px;
+        text-align: center;
+        background: #fafbfc;
+      }
+
+      .version {
+        font-size: 11px;
+        color: #6b778c;
+      }
+
+      .template-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px;
+        background: #fafbfc;
+        border: 1px solid #dfe1e6;
+        border-radius: 3px;
+        margin-bottom: 8px;
+      }
+
+      .template-info {
+        flex: 1;
+      }
+
+      .template-name {
+        font-weight: 500;
+        font-size: 13px;
+        color: #172b4d;
+      }
+
+      .template-desc {
+        font-size: 11px;
+        color: #6b778c;
+        margin-top: 2px;
+      }
+
+      .btn-delete {
+        padding: 6px 12px;
+        background: #ffebe6;
+        color: #bf2600;
+        border: 1px solid #ffbdad;
+        border-radius: 3px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .btn-delete:hover {
+        background: #ff8f73;
+        color: white;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 20px;
+        color: #6b778c;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Jira Improvement Suite</h1>
+        <div id="status-indicator" class="status-indicator">
+          <span class="status-dot"></span>
+          <span id="status-text">Not configured</span>
+        </div>
+      </header>
+
+      <section class="config-section">
+        <h2 data-section="api-config">API Configuration</h2>
+
+        <div class="section-content" id="api-config-content">
+          <div class="form-group">
+          <label for="api-endpoint">API Endpoint</label>
+          <input
+            type="text"
+            id="api-endpoint"
+            placeholder="https://api.openai.com/v1/chat/completions"
+            class="input-field"
+          />
+          <small class="help-text">Examples: OpenAI, Azure OpenAI, or custom endpoint</small>
+        </div>
+
+        <div class="form-group">
+          <label for="api-key">API Key</label>
+          <div class="password-input">
+            <input type="password" id="api-key" placeholder="sk-..." class="input-field" />
+            <button id="toggle-key-visibility" class="toggle-btn" type="button">Show</button>
+          </div>
+          <small class="help-text">Your API key is stored securely in Chrome</small>
+        </div>
+
+        <div class="form-group">
+          <label for="model-name">Model</label>
+          <input type="text" id="model-name" placeholder="gpt-4o-mini" class="input-field" />
+          <small class="help-text">Common: gpt-4o-mini, gpt-4o, gpt-4</small>
+        </div>
+
+        <div class="button-group">
+          <button id="save-config" class="btn btn-primary">Save Configuration</button>
+          <button id="test-config" class="btn btn-secondary">Test Connection</button>
+        </div>
+
+          <div id="test-result" class="test-result hidden"></div>
+        </div>
+      </section>
+
+      <section class="template-section">
+        <h2 data-section="active-template">Active Template</h2>
+        <div class="section-content" id="active-template-content">
+          <select id="template-select" class="input-field">
+            <option value="">Loading templates...</option>
+          </select>
+          <small class="help-text">Choose how the AI should improve descriptions</small>
+        </div>
+      </section>
+
+      <section class="config-section">
+        <h2 data-section="custom-templates">Custom Templates</h2>
+        <div class="section-content" id="custom-templates-content">
+        <div id="custom-templates-list"></div>
+
+        <div id="new-template-form" style="margin-top: 16px">
+          <div class="form-group">
+            <label for="template-name">Template Name</label>
+            <input
+              type="text"
+              id="template-name"
+              placeholder="My Custom Template"
+              class="input-field"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="template-description">Description</label>
+            <input
+              type="text"
+              id="template-description"
+              placeholder="Brief description of what this template does"
+              class="input-field"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="template-category">Category</label>
+            <select id="template-category" class="input-field">
+              <option value="general">General</option>
+              <option value="bug">Bug</option>
+              <option value="feature">Feature</option>
+              <option value="task">Task</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="template-prompt">Prompt Template</label>
+            <textarea
+              id="template-prompt"
+              class="input-field"
+              rows="6"
+              placeholder="Enter your prompt template. Use {{
+                DESCRIPTION
+              }} as a placeholder for the original text.
+
+Example:
+Improve this ticket by:
+- Making it more actionable
+- Adding context
+
+Original: {{ DESCRIPTION }}
+
+IMPORTANT: Format your response as HTML suitable for a rich text editor. Use <p> tags for paragraphs, <strong> for bold, <ul>/<li> for lists, <table>/<tr>/<td> for tables, etc."
+            ></textarea>
+            <small class="help-text"
+              >Use {{ DESCRIPTION }} where the original text should be inserted</small
+            >
+          </div>
+
+            <button id="save-template" class="btn btn-primary">Create Template</button>
+            <div id="template-result" class="test-result hidden"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="config-section">
+        <h2 data-section="custom-prompt">Additional Instructions</h2>
+        <div class="section-content" id="custom-prompt-content">
+          <div class="form-group">
+          <label for="custom-prompt">Add Additional Instructions</label>
+          <textarea
+            id="custom-prompt"
+            class="input-field"
+            rows="4"
+            placeholder="e.g., Use bullet points, Keep it under 200 words, Include acceptance criteria..."
+          ></textarea>
+          <small class="help-text"
+            >These instructions will be added to the AI's system prompt</small
+          >
+        </div>
+          <button id="save-custom-prompt" class="btn btn-primary">Save Custom Prompt</button>
+          <div id="custom-prompt-result" class="test-result hidden"></div>
+        </div>
+      </section>
+
+      <footer>
+        <p class="version">Version 1.0.0</p>
+      </footer>
+    </div>
+  </body>
+</html>
