@@ -1,4 +1,4 @@
-# Jira Improvement Suite - Chrome Extension
+# Ticket Tuner (for Jira) - Chrome Extension
 
 A Chrome extension that uses AI to improve Jira ticket descriptions. The extension detects when you're editing a Jira description field and offers an "Improve with AI" button that uses OpenAI-compatible APIs to enhance the content.
 

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Jira Improvement Suite",
+  "name": "Ticket Tuner (for Jira)",
   "version": "0.0.1",
   "description": "Improve Jira ticket descriptions using AI - with translation, grammar fixing, and rewriting capabilities",
   "permissions": ["storage", "activeTab"],
