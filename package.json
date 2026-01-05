@@ -8,7 +8,11 @@
     "clean": "rm -rf dist",
     "lint": "eslint src --ext .ts",
     "type-check": "tsc --noEmit",
-    "prettier": "npx prettier 'src/**/*.{ts,html,css}' --write"
+    "prettier": "npx prettier 'src/**/*.{ts,html,css}' --write",
+    "build:fresh": "npm run clean && npm run build",
+    "zip": "cd dist && zip -r ../ticket-tuner-for-jira-${npm_package_version}.zip .",
+    "build:zip": "npm run build:fresh && npm run zip",
+    "package": "npm run build:zip"
   },
   "keywords": [
     "chrome-extension",
