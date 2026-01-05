@@ -164,7 +164,7 @@ This extension works with any OpenAI-compatible API that supports the Chat Compl
 ### Project Structure
 
 ```
-__agilox_chrome_plugin/
+./
 ├── src/
 │   ├── background/
 │   │   └── service-worker.ts      # API calls, message handling
@@ -211,35 +211,6 @@ npm run lint
 - **Chrome Storage API** for configuration
 - **Fetch API** for AI requests
 
-## Next Steps
-
-### Immediate Improvements
-
-1. **Implement Modal Component**
-   - Create `src/components/modal.ts` with Shadow DOM
-   - Side-by-side comparison of original vs improved
-   - Editable improved text
-   - Better UX than direct pasting
-
-2. **Add Undo Functionality**
-   - Implement `src/content/undo-manager.ts`
-   - Store change history in Chrome local storage
-   - Inject undo button when changes exist
-
-3. **Custom Template UI**
-   - Add form in popup to create custom templates
-   - Save/delete custom templates
-   - Template categories
-
-### Future Enhancements
-
-- Keyboard shortcuts for improve/undo
-- Batch processing (improve multiple fields)
-- Usage tracking and cost estimation
-- Offline caching of improvements
-- Support for other Jira fields (comments, acceptance criteria)
-- Multi-language support
-- AI provider selection UI
 
 ## Troubleshooting
 
@@ -281,7 +252,3 @@ For issues, please check:
 1. Browser console (F12) for error messages
 2. Extension service worker console (chrome://extensions → Details → Inspect views: service worker)
 3. Configuration in popup (ensure all fields are filled)
-
----
-
-**Built with Claude Code** 🤖
