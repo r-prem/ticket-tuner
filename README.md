@@ -1,6 +1,6 @@
 # Ticket Tuner (for Jira) - Chrome Extension
 
-A Chrome extension that uses AI to improve Jira ticket descriptions. The extension detects when you're editing a Jira description field and offers an "Improve with AI" button that uses OpenAI-compatible APIs to enhance the content.
+A Chrome extension that uses AI to improve Jira ticket descriptions. The extension detects when you're editing a Jira description field and offers an "Improve with AI" button that uses OpenAI-compatible APIs to enhance the content. It also provides a lightweight text-selection popup on Jira pages, so you can Translate, Fix Grammar, or Rewrite any selected text inline without opening the full editor.
 
 ## ⚠️ Important Security & Cost Information
 
@@ -53,7 +53,6 @@ A Chrome extension that uses AI to improve Jira ticket descriptions. The extensi
 
 ## Features
 
-✅ **Implemented:**
 - Fully configurable API endpoint, API key, and model name
 - Detects Jira Cloud description fields in edit mode
 - Injects "Improve with AI" button into Jira UI
@@ -65,11 +64,10 @@ A Chrome extension that uses AI to improve Jira ticket descriptions. The extensi
 - Custom prompt support for additional AI instructions
 - Description length control (concise, standard, detailed)
 - PNG icons at all required sizes (16x16, 48x48, 128x128)
-
-🚧 **Potential Future Enhancements:**
-- Modal component for side-by-side comparison before applying changes
-- Undo functionality
-- Custom template creation UI
+- Inline Text Selection popup on Jira pages
+  - Actions: Rewrite, Translate (with language dropdown), Fix Grammar
+  - Supported languages in dropdown: German, English, Spanish, French, Italian, Portuguese, Dutch, Polish
+  - Replaces the selected text inline after processing
 
 ## Installation
 
@@ -135,6 +133,25 @@ Choose from the default templates:
 - The improved text is automatically pasted into the description field
 - Loading states show progress during the API call
 - Error messages appear if the API call fails
+
+### Text Selection Actions (Translate, Fix Grammar, Rewrite)
+
+Use quick inline actions without opening the full editor.
+
+1. Select any text inside a Jira issue (e.g., description, comment, or any rich-text area on Jira Cloud)
+2. A small popup appears next to your selection with three actions:
+   - Rewrite
+   - Translate (hover to choose a language)
+   - Fix Grammar
+3. Click an action (or select a target language under Translate)
+4. The selected text is sent to your configured AI endpoint
+5. The processed result replaces the selected text inline
+
+Notes:
+- Supported Translate languages in the dropdown: German, English, Spanish, French, Italian, Portuguese, Dutch, Polish
+- Works on Jira Cloud pages (*.atlassian.net) where content editing is allowed
+- Very large selections may be shortened by your model’s token limits
+- Be careful with sensitive information; selected text is sent to your AI endpoint when you use an action
 
 ## API Compatibility
 
