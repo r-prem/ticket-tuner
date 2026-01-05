@@ -66,21 +66,4 @@ For privacy questions or requests, please open an issue in the project repositor
 - Maintainer: Raffael Prem
 - Contact: raffaelprem@gmail.com
 
----
 
-## Chrome Web Store — Data Safety disclosure mapping
-Use the following mapping when completing the Chrome Web Store listing’s Data Safety section.
-
-- Data collection:
-  - The developer does not collect data.
-  - The Extension transmits user content (Jira description text) only to the user‑configured AI endpoint to provide the feature. This is “processed” but not “collected” by the developer.
-- Data shared:
-  - No data is shared with third parties by the developer. Transmission to your chosen AI provider is inherent to the feature and under your control.
-- Data types and purpose:
-  - User content: Transmitted solely to provide the feature (content improvement). Not used for advertising or analytics by the Extension.
-- Security practices:
-  - Data is transmitted over the network using the browser’s HTTPS stack (when your endpoint is HTTPS). API keys are stored in Chrome storage.
-- User deletion:
-  - Users can delete stored data by clearing the Extension’s data or uninstalling the Extension.
-
-If your organization’s compliance requires stricter controls (e.g., model hosting, regional residency), configure a compliant AI endpoint and/or a self‑hosted OpenAI‑compatible gateway under your control.
